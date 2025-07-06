@@ -6,10 +6,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @SpringBootApplication
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class UnitaskApplication {
+public class MessagingApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UnitaskApplication.class, args);
+        SpringApplication.run(MessagingApplication.class, args);
     }
 
 }

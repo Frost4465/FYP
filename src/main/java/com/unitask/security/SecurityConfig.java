@@ -1,6 +1,5 @@
 package com.unitask.security;
 
-import com.unitask.constant.Enum.UserRole;
 import com.unitask.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -85,8 +84,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/public/**").permitAll()
-                        .requestMatchers("/*/student/**").hasAuthority("ROLE_STUDENT")
-                        .requestMatchers("/*/lecturer/**").hasAuthority("ROLE_LECTURER")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

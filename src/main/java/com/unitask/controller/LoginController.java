@@ -40,7 +40,7 @@ public class LoginController {
 
     @PostMapping("/signUp")
     public ResponseEntity<?> singUp(@RequestBody SignUpRequest signUpRequest) {
-        userService.addUser(signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getName(), signUpRequest.getUserRole());
+        userService.addUser(signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getName());
         return ResponseEntity.ok("SIGN UP");
     }
 

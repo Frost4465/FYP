@@ -2,7 +2,6 @@ package com.unitask.service.impl;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.unitask.constant.Enum.UserRole;
 import com.unitask.constant.error.AuthErrorConstant;
 import com.unitask.constant.error.UserErrorConstant;
 import com.unitask.dao.AppUserDAO;
@@ -17,7 +16,6 @@ import com.unitask.service.ContextService;
 import com.unitask.service.UserService;
 import com.unitask.util.EmailUtil;
 import jakarta.mail.MessagingException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,10 +42,10 @@ public class UserServiceImpl extends ContextService implements UserService {
 
     private static final int OTP_EXPIRATION_MINUTES = 5;
 
-    private Cache<String, String> otpCache = CacheBuilder.newBuilder() .expireAfterWrite(OTP_EXPIRATION_MINUTES, TimeUnit.MINUTES) .build();
+    private Cache<String, String> otpCache = CacheBuilder.newBuilder().expireAfterWrite(OTP_EXPIRATION_MINUTES, TimeUnit.MINUTES).build();
 
     @Override
-    public void addUser(String username, String password, String name, UserRole userRole ) {
+    public void addUser(String username, String password, String name) {
         if (appUserDAO.findOptionalByEmail(username).isPresent()) {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, UserErrorConstant.EXISTS);
         }
@@ -56,7 +54,6 @@ public class UserServiceImpl extends ContextService implements UserService {
         appUser.setEmail(username);
         appUser.setName(name);
         appUser.setPassword(passwordEncoder.encode(password));
-        appUser.setUserRole(userRole);
         appUserDAO.save(appUser);
     }
 
