@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class MessagingListVO {
 
-    private String
+//    private String
 
 }

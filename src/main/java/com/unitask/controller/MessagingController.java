@@ -34,10 +34,10 @@ public class MessagingController {
         return messagingService.createChat(createChatMessage);
     }
 
-    @GetMapping("/listChat")
-    public List<?> listChat() {
-        return messagingService.getChatList(getCurrentAuthUsername());
-    }
+//    @GetMapping("/listChat")
+//    public List<?> listChat() {
+//        return messagingService.getChatList(getCurrentAuthUsername());
+//    }
 
     @PostMapping("/response")
     public MessagingResponseVO response(String messagingId, String message) {
