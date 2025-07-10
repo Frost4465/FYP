@@ -9,7 +9,7 @@ import jakarta.mail.MessagingException;
 import java.util.List;
 
 public interface UserService {
-    void addUser(String username, String password, String name);
+    void addUser(String email, String password, String firstName, String lastName, String userName);
 
     ProfileResponse readMyProfile();
 

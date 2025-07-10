@@ -20,9 +20,9 @@ public class MessagingResponseVO {
 
     public MessagingResponseVO(Chats chats, ChatMessages chatMessages) {
         this.senderId = chats.getSent().getId();
-        this.senderName = chats.getSent().getName();
+        this.senderName = chats.getSent().getUserName();
         this.receiverId = chats.getReceive().getId();
-        this.receiverName = chats.getReceive().getName();
+        this.receiverName = chats.getReceive().getUserName();
         this.messageContentList = chatMessages.getMessageContentList().stream().map(MessageContentVO::new).toList();
         this.messagingId = chatMessages.getId();
     }

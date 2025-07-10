@@ -45,14 +45,16 @@ public class UserServiceImpl extends ContextService implements UserService {
     private Cache<String, String> otpCache = CacheBuilder.newBuilder().expireAfterWrite(OTP_EXPIRATION_MINUTES, TimeUnit.MINUTES).build();
 
     @Override
-    public void addUser(String username, String password, String name) {
-        if (appUserDAO.findOptionalByEmail(username).isPresent()) {
+    public void addUser(String email, String password, String firstName, String lastName, String userName) {
+        if (appUserDAO.findOptionalByEmail(email).isPresent()) {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, UserErrorConstant.EXISTS);
         }
 
         AppUser appUser = new AppUser();
-        appUser.setEmail(username);
-        appUser.setName(name);
+        appUser.setEmail(email);
+        appUser.setFirstName(firstName);
+        appUser.setLastName(lastName);
+        appUser.setUserName(userName);
         appUser.setPassword(passwordEncoder.encode(password));
         appUserDAO.save(appUser);
     }
@@ -66,7 +68,9 @@ public class UserServiceImpl extends ContextService implements UserService {
     @Override
     public ProfileResponse updateMyProfile(ProfileRequest profileRequest) {
         AppUser appUser = appUserDAO.findByEmail(getCurrentAuthUsername());
-        appUser.setName(profileRequest.getName());
+        appUser.setFirstName(profileRequest.getFirstName());
+        appUser.setLastName(profileRequest.getLastName());
+        appUser.setUserName(profileRequest.getUserName());
         return userMapper.toResponse(appUserDAO.save(appUser));
     }
 

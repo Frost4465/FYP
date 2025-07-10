@@ -22,7 +22,7 @@ public class UserMapper {
         List<DropdownResponse> dropdownResponseList = new ArrayList<>();
         DropdownResponse dropdownResponse = new DropdownResponse();
         dropdownResponse.setId(appUser.getId());
-        dropdownResponse.setLabel(appUser.getName());
+        dropdownResponse.setLabel(appUser.getLastName() + " " + appUser.getFirstName());
         dropdownResponseList.add(dropdownResponse);
         return dropdownResponse;
     }
@@ -46,7 +46,7 @@ public class UserMapper {
         }
 
         ProfileResponse profileResponse = new ProfileResponse();
-        profileResponse.setName(appUser.getName());
+        profileResponse.setName(appUser.getLastName() + " " + appUser.getFirstName());
         profileResponse.setId(appUser.getId());
         return profileResponse;
     }

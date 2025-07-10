@@ -32,7 +32,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = utils.generateJwtToken(authentication);
         return ResponseEntity.ok(jwt);
@@ -40,7 +40,7 @@ public class LoginController {
 
     @PostMapping("/signUp")
     public ResponseEntity<?> singUp(@RequestBody SignUpRequest signUpRequest) {
-        userService.addUser(signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getName());
+        userService.addUser(signUpRequest.getEmail(), signUpRequest.getPassword(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getUserName());
         return ResponseEntity.ok("SIGN UP");
     }
 

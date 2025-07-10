@@ -7,5 +7,9 @@ import lombok.Data;
 public class ProfileRequest {
 
     @NotBlank
-    private String name;
+    private String firstName;
+    @NotBlank
+    private String lastName;
+    @NotBlank
+    private String userName;
 }

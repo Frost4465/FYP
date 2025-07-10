@@ -20,7 +20,11 @@ public class AppUser {
     @Column(nullable = false, unique = true)
     private String email;
     @Column
-    private String name;
+    private String firstName;
+    @Column
+    private String userName;
+    @Column
+    private String lastName;
     @Column(nullable = false, unique = true)
     private String password;
 }
