@@ -1,14 +1,17 @@
 package com.unitask.repository;
 
 import com.unitask.entity.Chats;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface ChatsRepository extends JpaRepository<Chats, Long> {
+public interface ChatsRepository extends MongoRepository<Chats, String> {
+
+    Chats findByMembersAndIsGroup(List<String> members, boolean isGroup);
+
+    List<Chats> findByGroupNameLikeAndMembersContainsOrderByLastMessage_TimestampDesc(String groupName, String members);
 
 
-    @Query("select c from Chats c where c.messageId = ?1")
-    Chats findByMessageId(String messageId);
 }

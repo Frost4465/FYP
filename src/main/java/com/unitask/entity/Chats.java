@@ -1,29 +1,30 @@
 package com.unitask.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@Entity
-@Table(name = "chats")
+@Document(collection = "chats")
 public class Chats {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "sent_user", referencedColumnName = "Id")
-    private AppUser sent;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "receive_user", referencedColumnName = "Id")
-    private AppUser receive;
-    @Column(name = "message_id")
-    private String messageId;
+    private String id;
+    private List<String> members;
+    private boolean isGroup;
+    private String groupName;
+    private String groupIcon;
+    private LastMessage lastMessage;
 
+    @Getter
+    @Setter
+    public static class LastMessage {
+        private String text;
+        private String sender;
+        private LocalDateTime timestamp;
+    }
 }

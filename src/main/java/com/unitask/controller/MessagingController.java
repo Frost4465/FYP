@@ -1,26 +1,28 @@
 package com.unitask.controller;
 
-import com.unitask.dto.messaging.request.CreateChatMessage;
-import com.unitask.dto.messaging.response.MessagingResponseVO;
+import com.unitask.dto.chat.request.CreateChatRequest;
+import com.unitask.dto.chat.response.ChatVo;
+import com.unitask.dto.messages.request.SendMessageRequest;
+import com.unitask.dto.messages.response.MessageVo;
 import com.unitask.security.JwtUtils;
-import com.unitask.service.MessagingService;
+import com.unitask.service.ChatService;
+import com.unitask.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping(path = "messaging")
+@RequestMapping(path = "messages")
 public class MessagingController {
 
     @Autowired
-    private MessagingService messagingService;
+    private ChatService chatService;
+    @Autowired
+    private MessageService messageService;
     @Autowired
     private JwtUtils jwtUtils;
 
@@ -29,19 +31,35 @@ public class MessagingController {
     }
 
 
-    @PostMapping("/createChat")
-    public MessagingResponseVO createChat(CreateChatMessage createChatMessage) {
-        return messagingService.createChat(createChatMessage);
+    @PostMapping("/chats")
+    public ChatVo createChat(CreateChatRequest createChatRequest) {
+        return chatService.createChat(createChatRequest);
     }
+
+    @PostMapping("/sendMessage")
+    public MessageVo sendMessage(@RequestBody SendMessageRequest request){
+        return messageService.sendMessage(request);
+    }
+
+    @GetMapping("/list")
+    public List<ChatVo> getChatForUser(String search){
+        String userName = getCurrentAuthUsername();
+        return chatService.getChatForUser(search, userName);
+    }
+
+//    @GetMapping("/chats/{id}")
+//    public MessagingResponseVO getChats(@PathVariable("id") String id) {
+//        return chatService.getChat(id);
+//    }
 
 //    @GetMapping("/listChat")
 //    public List<?> listChat() {
 //        return messagingService.getChatList(getCurrentAuthUsername());
 //    }
 
-    @PostMapping("/response")
-    public MessagingResponseVO response(String messagingId, String message) {
-        return messagingService.response(messagingId, message, getCurrentAuthUsername());
-    }
+//    @PostMapping("/response")
+//    public MessagingResponseVO response(String messagingId, String message) {
+//        return messagingService.response(messagingId, message, getCurrentAuthUsername());
+//    }
 
 }

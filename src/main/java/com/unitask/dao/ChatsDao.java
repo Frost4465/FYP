@@ -2,9 +2,12 @@ package com.unitask.dao;
 
 import com.unitask.entity.Chats;
 import com.unitask.repository.ChatsRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.thymeleaf.util.StringUtils;
+
+import java.util.List;
 
 @Service
 public class ChatsDao {
@@ -19,12 +22,25 @@ public class ChatsDao {
         return chatsRepository.save(chats);
     }
 
-    public Chats findByMessagingId(String id){
-        if (StringUtils.isBlank(id)){
+    public Chats findByMembersAndGroupStatus(List<String> members, boolean groupStatus) {
+        if (CollectionUtils.isEmpty(members)) {
             return null;
         }
-        return chatsRepository.findByMessageId(id);
+        return chatsRepository.findByMembersAndIsGroup(members, groupStatus);
     }
 
+    public Chats findById(String id) {
+        if (StringUtils.isEmpty(id)){
+            return null;
+        }
+        return chatsRepository.findById(id).orElse(null);
+    }
+
+    public List<Chats> findByList(String search, String id){
+        if (StringUtils.isEmpty(id)){
+            return null;
+        }
+        return chatsRepository.findByGroupNameLikeAndMembersContainsOrderByLastMessage_TimestampDesc(search, id);
+    }
 
 }

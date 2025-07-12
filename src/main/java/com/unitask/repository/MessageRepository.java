@@ -1,9 +1,9 @@
 package com.unitask.repository;
 
-import com.unitask.entity.ChatMessages;
+import com.unitask.entity.Message;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ChatMessagesRepository extends MongoRepository<ChatMessages, String> {
+public interface MessageRepository extends MongoRepository<Message, String> {
 }
