@@ -30,7 +30,7 @@ public class FriendController {
         return ResponseEntity.ok("OK");
     }
 
-    @PostMapping("/removeFriend/{id}")
+    @DeleteMapping("/removeFriend/{id}")
     public ResponseEntity<?> removeFriend(@PathVariable("id") Long id){
         friendService.removeFriend(getCurrentAuthUsername(), id);
         return ResponseEntity.ok("OK");

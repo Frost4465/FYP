@@ -10,11 +10,11 @@ import org.mapstruct.Mapping;
 public interface FriendMapper {
 
     @Mapping(target = "id", source = "friend.id")
-    @Mapping(target = "name", source = "friend.userName")
+    @Mapping(target = "userName", source = "friend.userName")
     FriendVo entityToVo(Friend friend);
 
     @Mapping(target="id", source = "id")
-    @Mapping(target = "name", source = "firstName")
+    @Mapping(target = "userName", source = "userName")
     FriendVo appUserToFriendVo(AppUser appUser);
 
 }

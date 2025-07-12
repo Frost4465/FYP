@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface FriendRepository extends JpaRepository<Friend, Long> {
 
-    @Query("select f from Friend f where f.user.Id = ?1 and f.friend.userName like ?2")
+    @Query("select f from Friend f where f.user.Id = ?1 and (?2 is null or f.friend.userName like ?2)")
     List<Friend> findByUserIdAndFriendUserNameLike(Long Id, String userName);
 
     @Query("select f from Friend f where f.user.Id = ?1 and f.friend.Id = ?2")

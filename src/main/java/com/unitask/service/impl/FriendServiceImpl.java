@@ -36,7 +36,7 @@ public class FriendServiceImpl implements FriendService {
     public void addFriend(String userEmail, Long friendId) {
         AppUser appUserId = appUserDAO.findByEmail(userEmail);
         Friend friend = friendDao.findUserFriendById(appUserId.getId(), friendId);
-        if (null == friend) {
+        if (null != friend) {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, "Unable To Add Friend");
         }
         AppUser appFriendId = appUserDAO.findById(friendId);
@@ -46,8 +46,8 @@ public class FriendServiceImpl implements FriendService {
         addFriend.setFriend(appFriendId);
 
         Friend viseVersa = new Friend();
-        addFriend.setUser(appFriendId);
-        addFriend.setFriend(appUserId);
+        viseVersa.setUser(appFriendId);
+        viseVersa.setFriend(appUserId);
         saveFriends.add(addFriend);
         saveFriends.add(viseVersa);
         friendDao.saveAll(saveFriends);
@@ -68,7 +68,8 @@ public class FriendServiceImpl implements FriendService {
         List<Friend> friendList = friendDao.findAll();
         List<AppUser> addedFriends = friendList.stream().filter(friend -> friend.getUser().equals(appUserId))
                 .map(Friend::getFriend).toList();
-        List<AppUser> notAddedFriends = appUserList.stream().filter(user -> !addedFriends.contains(addedFriends)).toList();
+        List<AppUser> notAddedFriends = appUserList.stream().filter(user -> !user.equals(appUserId))
+                .filter(user -> !addedFriends.contains(user)).toList();
         return notAddedFriends.stream().map(friendMapper::appUserToFriendVo).toList();
     }
 }

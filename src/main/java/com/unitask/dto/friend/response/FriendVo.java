@@ -8,6 +8,6 @@ import lombok.Setter;
 public class FriendVo {
 
     private Long id;
-    private String name;
+    private String userName;
 
 }
