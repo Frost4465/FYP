@@ -13,5 +13,6 @@ public interface ChatsRepository extends MongoRepository<Chats, String> {
 
     List<Chats> findByGroupNameLikeAndMembersContainsOrderByLastMessage_TimestampDesc(String groupName, String members);
 
+    List<Chats> findByMembersContaining(String member);
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public class ChatVo {
 
     private String id;
-    private List<String> members;
+    private List<Long> members;
     private boolean isGroup;
     private String groupName;
     private String groupIcon;

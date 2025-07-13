@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ChatService {
 
-    ChatVo createChat(CreateChatRequest request);
+    ChatVo createChat(CreateChatRequest request, String userName);
 
-    List<ChatVo> getChatForUser(String search, String username);
+    List<ChatVo> getChatForUser(String username);
 
 }

@@ -32,8 +32,9 @@ public class MessagingController {
 
 
     @PostMapping("/chats")
-    public ChatVo createChat(CreateChatRequest createChatRequest) {
-        return chatService.createChat(createChatRequest);
+    public ChatVo createChat(@RequestBody CreateChatRequest createChatRequest) {
+        String userName = getCurrentAuthUsername();
+        return chatService.createChat(createChatRequest, userName);
     }
 
     @PostMapping("/sendMessage")
@@ -44,7 +45,7 @@ public class MessagingController {
     @GetMapping("/list")
     public List<ChatVo> getChatForUser(String search){
         String userName = getCurrentAuthUsername();
-        return chatService.getChatForUser(search, userName);
+        return chatService.getChatForUser(userName);
     }
 
 //    @GetMapping("/chats/{id}")

@@ -36,11 +36,11 @@ public class ChatsDao {
         return chatsRepository.findById(id).orElse(null);
     }
 
-    public List<Chats> findByList(String search, String id){
+    public List<Chats> findByList(String id){
         if (StringUtils.isEmpty(id)){
             return null;
         }
-        return chatsRepository.findByGroupNameLikeAndMembersContainsOrderByLastMessage_TimestampDesc(search, id);
+        return chatsRepository.findByMembersContaining(id);
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class CreateChatRequest {
 
-    private List<String> memberIds;
+    private List<Long> memberIds;
     private boolean isGroup;
     private String groupName;
     private String groupIcon;
