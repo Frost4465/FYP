@@ -11,8 +11,11 @@ import com.unitask.mapper.MessageMapper;
 import com.unitask.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -48,6 +51,15 @@ public class MessageServiceImpl implements MessageService {
             chatsDao.save(chats);
         }
         return messageMapper.entityToVo(saved);
+    }
+
+    @Override
+    public List<MessageVo> getMessageChat(String id) {
+        List<Message> message = messagingDao.findByChatId(id);
+        if (CollectionUtils.isEmpty(message)){
+            return new ArrayList<>();
+        }
+        return message.stream().map(messageMapper::entityToVo).toList();
     }
 
 }

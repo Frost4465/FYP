@@ -42,8 +42,13 @@ public class MessagingController {
         return messageService.sendMessage(request);
     }
 
+    @GetMapping("/getMessage/{id}")
+    public List<MessageVo> getMessageChat(@PathVariable("id") String id){
+        return messageService.getMessageChat(id);
+    }
+
     @GetMapping("/list")
-    public List<ChatVo> getChatForUser(String search){
+    public List<ChatVo> getChatForUser(){
         String userName = getCurrentAuthUsername();
         return chatService.getChatForUser(userName);
     }
