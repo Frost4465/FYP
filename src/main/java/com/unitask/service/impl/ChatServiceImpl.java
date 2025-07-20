@@ -10,6 +10,7 @@ import com.unitask.exception.ServiceAppException;
 import com.unitask.mapper.ChatMapper;
 import com.unitask.service.ChatService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,14 @@ public class ChatServiceImpl implements ChatService {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, "User does not exists");
         }
         return chatsDao.findByList(appUser.getId().toString()).stream().map(chat -> chatMapper.entityToVo(chat)).toList();
+    }
+
+    @Override
+    public ChatVo getChatById(String chatId) {
+        if (StringUtils.isBlank(chatId)){
+            return null;
+        }
+        return chatMapper.entityToVo(chatsDao.findById(chatId));
     }
 
 

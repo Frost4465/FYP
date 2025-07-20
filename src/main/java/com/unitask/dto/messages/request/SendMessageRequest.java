@@ -10,7 +10,6 @@ import java.util.List;
 public class SendMessageRequest {
 
     private String chatId;
-    private String senderId;
     private String text;
     private List<String> attachments;
     private String replyTo;

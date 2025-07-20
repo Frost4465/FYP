@@ -13,6 +13,7 @@ public class MessageVo {
     private String id;
     private String chatId;
     private String sender;
+    private String senderName;
     private String text;
     private List<String> attachments;
     private LocalDateTime timestamp;

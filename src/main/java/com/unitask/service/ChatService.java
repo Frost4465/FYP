@@ -11,4 +11,6 @@ public interface ChatService {
 
     List<ChatVo> getChatForUser(String username);
 
+    ChatVo getChatById(String chatId);
+
 }

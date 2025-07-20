@@ -8,6 +8,7 @@ import com.unitask.security.JwtUtils;
 import com.unitask.service.ChatService;
 import com.unitask.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,15 @@ public class MessagingController {
         return chatService.createChat(createChatRequest, userName);
     }
 
+    @GetMapping("/getChat/{id}")
+    public ChatVo getChat(@PathVariable String id) {
+        return chatService.getChatById(id);
+    }
+
     @PostMapping("/sendMessage")
     public MessageVo sendMessage(@RequestBody SendMessageRequest request){
-        return messageService.sendMessage(request);
+        String userName = getCurrentAuthUsername();
+        return messageService.sendMessage(request, userName);
     }
 
     @GetMapping("/getMessage/{id}")

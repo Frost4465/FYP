@@ -1,15 +1,19 @@
 package com.unitask.service.impl;
 
 import com.unitask.constant.Enum.MessageStatus;
+import com.unitask.dao.AppUserDAO;
 import com.unitask.dao.ChatsDao;
 import com.unitask.dao.MessagingDao;
 import com.unitask.dto.messages.request.SendMessageRequest;
 import com.unitask.dto.messages.response.MessageVo;
+import com.unitask.entity.AppUser;
 import com.unitask.entity.Chats;
 import com.unitask.entity.Message;
+import com.unitask.exception.ServiceAppException;
 import com.unitask.mapper.MessageMapper;
 import com.unitask.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -26,12 +30,20 @@ public class MessageServiceImpl implements MessageService {
     MessagingDao messagingDao;
     @Autowired
     MessageMapper messageMapper;
+    @Autowired
+    private AppUserDAO appUserDAO;
 
     @Override
-    public MessageVo sendMessage(SendMessageRequest request) {
+    public MessageVo sendMessage(SendMessageRequest request, String userName) {
+
+        AppUser appUser = appUserDAO.findByEmail(userName);
+        if (appUser == null) {
+            throw new ServiceAppException(HttpStatus.BAD_REQUEST, "User not found");
+        }
         Message msg = new Message();
         msg.setChatId(request.getChatId());
-        msg.setSender(request.getSenderId());
+        msg.setSender(appUser.getId().toString());
+        msg.setSenderName(appUser.getUserName());
         msg.setText(request.getText());
         msg.setAttachments(request.getAttachments());
         msg.setTimestamp(LocalDateTime.now());

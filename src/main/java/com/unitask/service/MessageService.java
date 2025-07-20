@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MessageService {
 
-    MessageVo sendMessage(SendMessageRequest request);
+    MessageVo sendMessage(SendMessageRequest request, String userName);
 
     List<MessageVo> getMessageChat(String id);
 
