@@ -8,7 +8,6 @@ import com.unitask.security.JwtUtils;
 import com.unitask.service.ChatService;
 import com.unitask.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,35 +43,20 @@ public class MessagingController {
     }
 
     @PostMapping("/sendMessage")
-    public MessageVo sendMessage(@RequestBody SendMessageRequest request){
+    public MessageVo sendMessage(@RequestBody SendMessageRequest request) {
         String userName = getCurrentAuthUsername();
         return messageService.sendMessage(request, userName);
     }
 
     @GetMapping("/getMessage/{id}")
-    public List<MessageVo> getMessageChat(@PathVariable("id") String id){
+    public List<MessageVo> getMessageChat(@PathVariable("id") String id) {
         return messageService.getMessageChat(id);
     }
 
     @GetMapping("/list")
-    public List<ChatVo> getChatForUser(){
+    public List<ChatVo> getChatForUser() {
         String userName = getCurrentAuthUsername();
         return chatService.getChatForUser(userName);
     }
-
-//    @GetMapping("/chats/{id}")
-//    public MessagingResponseVO getChats(@PathVariable("id") String id) {
-//        return chatService.getChat(id);
-//    }
-
-//    @GetMapping("/listChat")
-//    public List<?> listChat() {
-//        return messagingService.getChatList(getCurrentAuthUsername());
-//    }
-
-//    @PostMapping("/response")
-//    public MessagingResponseVO response(String messagingId, String message) {
-//        return messagingService.response(messagingId, message, getCurrentAuthUsername());
-//    }
 
 }
